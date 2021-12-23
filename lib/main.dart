@@ -1,3 +1,4 @@
+import 'package:demo_listtile/details.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -38,6 +39,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final items = List<String>.generate(1000, (i) => "item $i");
   @override
   Widget build(BuildContext context) {
     List mydata = ['apple', 'banana', 'papaya'];
@@ -45,33 +47,22 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            onTap: () {},
-            leading: FlutterLogo(),
-            title: Text(mydata[0]),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Text("Hello list tile"),
-          SizedBox(
-            height: 20,
-          ),
-          ListTile(
-            onTap: () {},
-            leading: FlutterLogo(),
-            title: Text(mydata[1]),
-          ),
-          ListTile(
-            onTap: () {},
-            leading: FlutterLogo(),
-            title: Text(mydata[2]),
-            subtitle: Text("Hello Thansuda"),
-            trailing: Icon(Icons.delete , color: Colors.red,),
-          ),
-        ],
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(2),
+            child: Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailsPage()));
+                },
+                leading: Icon(Icons.map),
+                title: Text(mydata[index]),
+              ),
+            ),
+          );
+        },
+        itemCount: mydata.length,
       ),
     );
   }
